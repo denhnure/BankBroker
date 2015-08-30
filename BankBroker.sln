@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankBroker", "BankBroker\BankBroker.csproj", "{6C4C057D-5DE8-4DD7-B6C0-ADF5A5887AD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankBroker.Tests", "BankBroker.Tests\BankBroker.Tests.csproj", "{7B3C591E-3BEB-46D9-95FA-87EC8EA33B04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankBroker.Logic", "BankBroker.Logic\BankBroker.Logic.csproj", "{A10872A6-D499-4251-A5C3-1EA980FF7FD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6C4C057D-5DE8-4DD7-B6C0-ADF5A5887AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C4C057D-5DE8-4DD7-B6C0-ADF5A5887AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C4C057D-5DE8-4DD7-B6C0-ADF5A5887AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B3C591E-3BEB-46D9-95FA-87EC8EA33B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B3C591E-3BEB-46D9-95FA-87EC8EA33B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3C591E-3BEB-46D9-95FA-87EC8EA33B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3C591E-3BEB-46D9-95FA-87EC8EA33B04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A10872A6-D499-4251-A5C3-1EA980FF7FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10872A6-D499-4251-A5C3-1EA980FF7FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10872A6-D499-4251-A5C3-1EA980FF7FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10872A6-D499-4251-A5C3-1EA980FF7FD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
