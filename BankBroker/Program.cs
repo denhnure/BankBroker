@@ -70,20 +70,7 @@ namespace BankBroker
 
             if (_startDate > _endDate || _initialCapital < 0 || _startDate > DateTime.Now || _endDate > DateTime.Now)
             {
-                if (_startDate > _endDate)
-                {
-                    Console.WriteLine("Start date should be before end date");
-                }
-
-                if (_initialCapital < 0)
-                {
-                    Console.WriteLine("Initial capital couldn't be negative");
-                }
-
-                if (_startDate > DateTime.Now || _endDate > DateTime.Now)
-                {
-                    Console.WriteLine("Please use date that is less than today's date");
-                }
+                InputDataValidation();
 
                 Console.WriteLine("Please restart the application");
                 
@@ -97,6 +84,24 @@ namespace BankBroker
             Console.WriteLine();
 
             return true;
+        }
+
+        private static void InputDataValidation()
+        {
+            if (_startDate > _endDate)
+            {
+                Console.WriteLine("Start date should be before end date");
+            }
+
+            if (_initialCapital < 0)
+            {
+                Console.WriteLine("Initial capital couldn't be negative");
+            }
+
+            if (_startDate > DateTime.Now || _endDate > DateTime.Now)
+            {
+                Console.WriteLine("Please use date that is less than today's date");
+            }
         }
     }
 }
