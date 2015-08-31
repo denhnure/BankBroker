@@ -55,7 +55,7 @@ namespace BankBroker.Logic
 
                     if (!DateToExchangeRateDictionary.TryAdd(_fileHelper.GetDateFromFileName(fileName), csvData))
                     {
-                        throw new Exception("Something strange happened! Please restart the application!");
+                        throw new Exception("Something strange happenned! Please restart the application!");
                     }
                 }
             }
