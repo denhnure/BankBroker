@@ -68,7 +68,7 @@ namespace BankBroker
                 enteredData = Console.ReadLine();
             } while (!Single.TryParse(enteredData, out _initialCapital));
 
-            if (_startDate > _endDate || _initialCapital < 0)
+            if (_startDate > _endDate || _initialCapital < 0 || _startDate > DateTime.Now || _endDate > DateTime.Now)
             {
                 if (_startDate > _endDate)
                 {
@@ -78,6 +78,11 @@ namespace BankBroker
                 if (_initialCapital < 0)
                 {
                     Console.WriteLine("Initial capital couldn't be negative");
+                }
+
+                if (_startDate > DateTime.Now || _endDate > DateTime.Now)
+                {
+                    Console.WriteLine("Please use date that is less than today's date");
                 }
 
                 Console.WriteLine("Please restart the application");
