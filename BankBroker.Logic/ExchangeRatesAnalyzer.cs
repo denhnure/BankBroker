@@ -62,7 +62,7 @@ namespace BankBroker.Logic
 
         public float CalculateRemainingCapital(XmlOutputBestExchangeRate bestExchangeRate, float initialCapital)
         {
-            return (initialCapital / bestExchangeRate.MinForeignExchangeSellValue) * bestExchangeRate.MaxForeignExchangeBuyValue;
+            return ((initialCapital / bestExchangeRate.MinForeignExchangeSellValue) * bestExchangeRate.MaxForeignExchangeBuyValue) / bestExchangeRate.Unit;
         }
 
         private void ProcessItems()
