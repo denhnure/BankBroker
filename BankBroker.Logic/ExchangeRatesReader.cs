@@ -12,19 +12,23 @@ namespace BankBroker.Logic
 {
     public class ExchangeRatesReader
     {
+        #region Fields
+
+        private readonly ExchangeRatesFileHelper _fileHelper;
+
+        #endregion
+        
         #region .ctors
 
         public ExchangeRatesReader(ExchangeRatesFileHelper fileHelper)
         {
             DateToExchangeRateDictionary = new ConcurrentDictionary<DateTime, List<CsvFileExchangeRate>>();
-            FileHelper = fileHelper;
+            _fileHelper = fileHelper;
         }
 
         #endregion
 
         #region Properties
-
-        public ExchangeRatesFileHelper FileHelper { get; private set; }
 
         public ConcurrentDictionary<DateTime, List<CsvFileExchangeRate>> DateToExchangeRateDictionary { get; private set; }
 
@@ -34,7 +38,7 @@ namespace BankBroker.Logic
 
         public void ReadCsvFiles()
         {
-            Parallel.ForEach(FileHelper.UrlToFileNameDictionary.Values, ReadCsvFile);
+            Parallel.ForEach(_fileHelper.UrlToFileNameDictionary.Values, ReadCsvFile);
         }
 
         private void ReadCsvFile(string fileName)
@@ -49,7 +53,7 @@ namespace BankBroker.Logic
 
                     var csvData = csvReader.GetRecords<CsvFileExchangeRate>().ToList();
 
-                    if (!DateToExchangeRateDictionary.TryAdd(FileHelper.GetDateFromFileName(fileName), csvData))
+                    if (!DateToExchangeRateDictionary.TryAdd(_fileHelper.GetDateFromFileName(fileName), csvData))
                     {
                         throw new Exception("Something strange happened! Please restart the application!");
                     }

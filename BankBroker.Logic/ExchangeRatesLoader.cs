@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BankBroker.Logic
 {
-    public class ExchangeRatesLoader
+    public class ExchangeRatesLoader : IExchangeRatesLoader
     {
         #region Fields
 

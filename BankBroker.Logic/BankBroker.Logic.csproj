@@ -46,6 +46,8 @@
     <Compile Include="ExchangeRatesAnalyzer.cs" />
     <Compile Include="ExchangeRatesLoader.cs" />
     <Compile Include="ExchangeRatesReader.cs" />
+    <Compile Include="FakeExchangeRatesLoader.cs" />
+    <Compile Include="IExchangeRatesLoader.cs" />
     <Compile Include="Mappings\ExchangeRateMap.cs" />
     <Compile Include="Models\CsvFileExchangeRate.cs" />
     <Compile Include="Models\ExchangeRateBase.cs" />

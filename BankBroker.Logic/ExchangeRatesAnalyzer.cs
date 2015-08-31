@@ -9,7 +9,7 @@ namespace BankBroker.Logic
     {
         #region Fields
 
-        private readonly ExchangeRatesLoader _exchangeRatesLoader;
+        private readonly IExchangeRatesLoader _exchangeRatesLoader;
         private readonly ExchangeRatesReader _exchangeRatesReader;
         private readonly Dictionary<string, XmlOutputBestExchangeRate> _bestExchangeRates; 
         private IOrderedEnumerable<KeyValuePair<DateTime, List<CsvFileExchangeRate>>> _sortedDateToExchangeRateDictionary;
@@ -18,7 +18,7 @@ namespace BankBroker.Logic
 
         #region .ctors
 
-        public ExchangeRatesAnalyzer(ExchangeRatesLoader exchangeRatesLoader, ExchangeRatesReader exchangeRatesReader)
+        public ExchangeRatesAnalyzer(IExchangeRatesLoader exchangeRatesLoader, ExchangeRatesReader exchangeRatesReader)
         {
             _exchangeRatesLoader = exchangeRatesLoader;
             _exchangeRatesReader = exchangeRatesReader;
@@ -32,13 +32,37 @@ namespace BankBroker.Logic
 
         public void Analyze()
         {
-            //_exchangeRatesLoader.DownloadFiles();
+            _exchangeRatesLoader.DownloadFiles();
 
             _exchangeRatesReader.ReadCsvFiles();
 
             _sortedDateToExchangeRateDictionary = _exchangeRatesReader.DateToExchangeRateDictionary.OrderBy(exchangeRate => exchangeRate.Key);
 
             ProcessItems();
+
+            CalculateProfits();
+        }
+
+        public XmlOutputBestExchangeRate FindBestExchangeRate()
+        {
+            var maxProfit = 0.0f;
+            var bestCurrency = String.Empty;
+            
+            foreach (KeyValuePair<string, XmlOutputBestExchangeRate> exchangeRate in _bestExchangeRates)
+            {
+                if (exchangeRate.Value.Profit > maxProfit)
+                {
+                    maxProfit = exchangeRate.Value.Profit;
+                    bestCurrency = exchangeRate.Key;
+                }
+            }
+
+            return string.IsNullOrEmpty(bestCurrency) ? null : _bestExchangeRates[bestCurrency];
+        }
+
+        public float CalculateRemainingCapital(XmlOutputBestExchangeRate bestExchangeRate, float initialCapital)
+        {
+            return (initialCapital / bestExchangeRate.MinForeignExchangeSellValue) * bestExchangeRate.MaxForeignExchangeBuyValue;
         }
 
         private void ProcessItems()
@@ -80,6 +104,17 @@ namespace BankBroker.Logic
                         }
                     }
                 }
+            }
+        }
+
+        private void CalculateProfits()
+        {
+            foreach (KeyValuePair<string, XmlOutputBestExchangeRate> exchangeRate in _bestExchangeRates)
+            {
+                var currentProfit = exchangeRate.Value.MaxForeignExchangeBuyValue - exchangeRate.Value.MinForeignExchangeSellValue;
+                currentProfit /= exchangeRate.Value.Unit;
+
+                exchangeRate.Value.Profit = currentProfit;
             }
         }
 

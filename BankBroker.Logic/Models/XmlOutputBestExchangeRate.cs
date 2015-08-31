@@ -11,5 +11,7 @@ namespace BankBroker.Logic.Models
         public float MinForeignExchangeSellValue { get; set; }
 
         public float MaxForeignExchangeBuyValue { get; set; }
+
+        public float Profit { get; set; }
     }
 }

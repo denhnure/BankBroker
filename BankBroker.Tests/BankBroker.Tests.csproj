@@ -50,7 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="TestExchangeRatesAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +58,13 @@
       <Project>{a10872a6-d499-4251-a5c3-1ea980ff7fd6}</Project>
       <Name>BankBroker.Logic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\29.09.2014.csv" />
+    <None Include="TestData\30.09.2014.csv" />
+    <None Include="TestData\26.09.2014.csv" />
+    <None Include="TestData\27.09.2014.csv" />
+    <None Include="TestData\28.09.2014.csv" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
