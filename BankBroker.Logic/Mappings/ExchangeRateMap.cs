@@ -4,7 +4,7 @@ using CsvHelper.Configuration;
 
 namespace BankBroker.Logic.Mappings
 {
-    public sealed class ExchangeRateMap : CsvClassMap<ExchangeRate>
+    public sealed class ExchangeRateMap : CsvClassMap<CsvFileExchangeRate>
     {
         public ExchangeRateMap()
         {

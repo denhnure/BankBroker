@@ -42,9 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ExchangeRatesFileHelper.cs" />
+    <Compile Include="ExchangeRatesAnalyzer.cs" />
+    <Compile Include="ExchangeRatesLoader.cs" />
+    <Compile Include="ExchangeRatesReader.cs" />
     <Compile Include="Mappings\ExchangeRateMap.cs" />
-    <Compile Include="Models\ExchangeRate.cs" />
+    <Compile Include="Models\CsvFileExchangeRate.cs" />
+    <Compile Include="Models\ExchangeRateBase.cs" />
+    <Compile Include="Models\XmlOutputBestExchangeRate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

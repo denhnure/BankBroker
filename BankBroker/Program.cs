@@ -1,15 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BankBroker.Logic;
 
 namespace BankBroker
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
+            var startDate = new DateTime(2014, 9, 26);
+            var endDate = new DateTime(2014, 12, 30);
+
+            var fileHelper = new ExchangeRatesFileHelper(startDate, endDate);
+            var exchangeRatesLoader = new ExchangeRatesLoader(fileHelper);
+            var exchangeRatesReader = new ExchangeRatesReader(fileHelper);
+            var exchangeRatesAnalyzer = new ExchangeRatesAnalyzer(exchangeRatesLoader, exchangeRatesReader);
+
+            exchangeRatesAnalyzer.Analyze();
+
+            Console.ReadKey();
         }
     }
 }

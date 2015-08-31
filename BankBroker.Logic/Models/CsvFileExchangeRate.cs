@@ -1,13 +1,7 @@
-﻿namespace BankBroker.Logic.Models
+namespace BankBroker.Logic.Models
 {
-    public class ExchangeRate
+    public class CsvFileExchangeRate : ExchangeRateBase
     {
-        public string Country { get; set; }
-
-        public int Unit { get; set; }
-
-        public string Currency { get; set; }
-
         public float Change { get; set; }
 
         public string ChangeSign { get; set; }
