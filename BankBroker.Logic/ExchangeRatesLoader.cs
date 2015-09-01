@@ -27,7 +27,7 @@ namespace BankBroker.Logic
         {
             _fileHelper.Cleanup();
 
-            Parallel.ForEach(_fileHelper.UrlToFileNameDictionary, new ParallelOptions { MaxDegreeOfParallelism = 10 }, DownloadFile);
+            Parallel.ForEach(_fileHelper.UrlToFileNameDictionary, new ParallelOptions { MaxDegreeOfParallelism = 3 }, DownloadFile);
         }
 
         private void DownloadFile(KeyValuePair<string,string> exchangeRatePair)
