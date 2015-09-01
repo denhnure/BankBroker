@@ -83,25 +83,33 @@ namespace BankBroker.Logic
             if (!_bestExchangeRates.ContainsKey(currentCurrency))
             {
                 AddItemToBestExchangeRate(currentCsvFileExchangeRate, currentDate);
+                CalculateMinSellMaxBuyValues(currentCsvFileExchangeRate, currentDate, currentCurrency);
+
+                return;
             }
             
-            if (currentCsvFileExchangeRate.ForeignExchangeSell <= _bestExchangeRates[currentCurrency].MinForeignExchangeSellValue)
+            if (currentCsvFileExchangeRate.ForeignExchangeSell < _bestExchangeRates[currentCurrency].MinForeignExchangeSellValue)
             {
-                foreach (KeyValuePair<DateTime, List<CsvFileExchangeRate>> dateToExchangeRatePair in _sortedDateToExchangeRateDictionary.SkipWhile(item => currentDate > item.Key))
+                CalculateMinSellMaxBuyValues(currentCsvFileExchangeRate, currentDate, currentCurrency);
+            }
+        }
+
+        private void CalculateMinSellMaxBuyValues(CsvFileExchangeRate currentCsvFileExchangeRate, DateTime currentDate, string currentCurrency)
+        {
+            foreach (KeyValuePair<DateTime, List<CsvFileExchangeRate>> dateToExchangeRatePair in _sortedDateToExchangeRateDictionary.SkipWhile(item => currentDate > item.Key))
+            {
+                foreach (CsvFileExchangeRate innerLoopCsvFileExchangeRate in dateToExchangeRatePair.Value.Where(item => item.Currency == currentCurrency))
                 {
-                    foreach (CsvFileExchangeRate innerLoopCsvFileExchangeRate in dateToExchangeRatePair.Value.Where(item => item.Currency == currentCurrency))
+                    var originDiff = _bestExchangeRates[currentCurrency].MaxForeignExchangeBuyValue - _bestExchangeRates[currentCurrency].MinForeignExchangeSellValue;
+                    var newDiff = innerLoopCsvFileExchangeRate.ForeignExchangeBuy - currentCsvFileExchangeRate.ForeignExchangeSell;
+
+                    if (newDiff > originDiff)
                     {
-                        var originDiff = _bestExchangeRates[currentCurrency].MaxForeignExchangeBuyValue - _bestExchangeRates[currentCurrency].MinForeignExchangeSellValue;
-                        var newDiff = innerLoopCsvFileExchangeRate.ForeignExchangeBuy - currentCsvFileExchangeRate.ForeignExchangeSell;
+                        _bestExchangeRates[currentCurrency].MinForeignExchangeSellValue = currentCsvFileExchangeRate.ForeignExchangeSell;
+                        _bestExchangeRates[currentCurrency].MinForeignExchangeSellDate = currentDate;
 
-                        if (newDiff > originDiff)
-                        {
-                            _bestExchangeRates[currentCurrency].MinForeignExchangeSellValue = currentCsvFileExchangeRate.ForeignExchangeSell;
-                            _bestExchangeRates[currentCurrency].MinForeignExchangeSellDate = currentDate;
-
-                            _bestExchangeRates[currentCurrency].MaxForeignExchangeBuyValue = innerLoopCsvFileExchangeRate.ForeignExchangeBuy;
-                            _bestExchangeRates[currentCurrency].MaxForeignExchangeBuyDate = dateToExchangeRatePair.Key;
-                        }
+                        _bestExchangeRates[currentCurrency].MaxForeignExchangeBuyValue = innerLoopCsvFileExchangeRate.ForeignExchangeBuy;
+                        _bestExchangeRates[currentCurrency].MaxForeignExchangeBuyDate = dateToExchangeRatePair.Key;
                     }
                 }
             }
