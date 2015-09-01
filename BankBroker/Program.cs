@@ -26,19 +26,26 @@ namespace BankBroker
             
             var bestExchangeRate = exchangeRatesAnalyzer.FindBestExchangeRate();
 
-            var remainingCapital = exchangeRatesAnalyzer.CalculateRemainingCapital(bestExchangeRate, _initialCapital);
+            if (bestExchangeRate != null)
+            {
+                var remainingCapital = exchangeRatesAnalyzer.CalculateRemainingCapital(bestExchangeRate, _initialCapital);
 
-            var resultingXml = new XElement("Root",
-                new XElement("Currency", bestExchangeRate.Currency),
-                new XElement("BestDayOfBuy", bestExchangeRate.MinForeignExchangeSellDate.ToString(fileHelper.DateFormat, fileHelper.CultureInfo)),
-                new XElement("BestDayOfSell", bestExchangeRate.MaxForeignExchangeBuyDate.ToString(fileHelper.DateFormat, fileHelper.CultureInfo)),
-                new XElement("InitialCapital", _initialCapital),
-                new XElement("RemainingCapital", remainingCapital),
-                new XElement("Profit", remainingCapital - _initialCapital));
-            
-            resultingXml.Save(fileHelper.ResultingXmlPath);
+                var resultingXml = new XElement("Root",
+                    new XElement("Currency", bestExchangeRate.Currency),
+                    new XElement("BestDayOfBuy", bestExchangeRate.MinForeignExchangeSellDate.ToString(fileHelper.DateFormat, fileHelper.CultureInfo)),
+                    new XElement("BestDayOfSell", bestExchangeRate.MaxForeignExchangeBuyDate.ToString(fileHelper.DateFormat, fileHelper.CultureInfo)),
+                    new XElement("InitialCapital", _initialCapital),
+                    new XElement("RemainingCapital", remainingCapital),
+                    new XElement("Profit", remainingCapital - _initialCapital));
 
-            Console.WriteLine("Resulting xml file has been generated to Output folder of the current assembly");
+                resultingXml.Save(fileHelper.ResultingXmlPath);
+
+                Console.WriteLine("Resulting xml file has been generated to Output folder of the current assembly");
+            }
+            else
+            {
+                Console.WriteLine("Too short period to make profit :)");
+            }
 
             Console.ReadKey();
         }
